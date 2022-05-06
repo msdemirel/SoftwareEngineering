@@ -4,29 +4,27 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody2D body;
+    public CharacterController2D controller;
 
-    float horizontal;
-    float vertical;
-
-    public float runSpeed = 10.0f;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public float runSpeed = 70f;
+    float horizontalMove = 0f;
+    bool jump = false;
+  
+    private void Update()
     {
-        body = GetComponent<Rigidbody2D>();
-    }
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump = true;
+        }
+       
     }
 
     private void FixedUpdate()
     {
-        body.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+
+        jump = false;
     }
 }
