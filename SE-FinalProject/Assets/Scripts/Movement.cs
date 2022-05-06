@@ -9,10 +9,13 @@ public class Movement : MonoBehaviour
     public float runSpeed = 70f;
     float horizontalMove = 0f;
     bool jump = false;
+    public Animator animator;
   
     private void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+        animator.Play("Walking Animaton");
 
         if (Input.GetButtonDown("Jump"))
         {
